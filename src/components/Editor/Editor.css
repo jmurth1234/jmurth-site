@@ -1,0 +1,13 @@
+.mde-header ul.mde-header-group li.mde-header-item button {
+  background-color: transparent;
+  color: #fff;
+}
+
+.mde-header {
+  background-color: #2f3136;
+}
+
+.react-mde,
+.mde-header {
+  border: none;
+}

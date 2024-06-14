@@ -1,0 +1,75 @@
+{
+  "name": "next-latest-starter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
+    "generate:types": "payload generate:types",
+    "standalone-script": "tsx ./src/scripts/standalone-script.ts",
+    "seed": "tsx ./src/data/seed.ts"
+  },
+  "engines": {
+    "node": ">=18.19.0"
+  },
+  "dependencies": {
+    "@lexical/headless": "^0.16.0",
+    "@lexical/markdown": "^0.16.0",
+    "@payloadcms/db-mongodb": "3.0.0-beta.47",
+    "@payloadcms/db-postgres": "3.0.0-beta.47",
+    "@payloadcms/live-preview-react": "3.0.0-beta.47",
+    "@payloadcms/next": "3.0.0-beta.47",
+    "@payloadcms/plugin-cloud-storage": "^1.1.2",
+    "@payloadcms/richtext-lexical": "3.0.0-beta.47",
+    "@payloadcms/richtext-slate": "3.0.0-beta.47",
+    "@payloadcms/ui": "3.0.0-beta.47",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/line-clamp": "^0.4.4",
+    "@tailwindcss/typography": "^0.5.13",
+    "babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601",
+    "classnames": "^2.5.1",
+    "cross-env": "^7.0.3",
+    "glob": "^10.4.1",
+    "gray-matter": "^4.0.3",
+    "html2plaintext": "^2.1.4",
+    "marked": "^13.0.0",
+    "next": "15.0.0-rc.0",
+    "payload": "3.0.0-beta.47",
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-dom": "19.0.0-rc-f994737d14-20240522",
+    "react-markdown": "^9.0.1",
+    "react-mde": "^11.5.0",
+    "rehype-raw": "^7.0.0",
+    "sharp": "0.33.4",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.2",
+    "@types/react": "npm:types-react@19.0.0-beta.2",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2",
+    "autoprefixer": "^10.4.19",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "15.0.0-rc.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "tsx": "^4.15.4",
+    "typescript": "^5.4.5"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-beta.2",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
+    }
+  },
+  "overrides": {
+    "@types/react": "npm:types-react@19.0.0-beta.2",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-beta.2"
+  },
+  "packageManager": "pnpm@8.15.4+sha256.cea6d0bdf2de3a0549582da3983c70c92ffc577ff4410cbf190817ddc35137c2"
+}
