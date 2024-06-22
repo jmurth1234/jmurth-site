@@ -3,7 +3,7 @@ import html2plaintext from 'html2plaintext'
 
 export default function toMarkdown(string: string) {
   const content = marked(string, {
-    smartypants: true,
+    // smartypants: true,
   })
 
   const toPlainText = function () {

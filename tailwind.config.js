@@ -4,7 +4,15 @@ const colors = require('tailwindcss/colors')
 const config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    extend: {},
+    extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '800px',
+          },
+        },
+      },
+    },
     container: {
       center: true,
       screens: {

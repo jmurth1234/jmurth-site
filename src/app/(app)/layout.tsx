@@ -35,18 +35,20 @@ const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
 
   return (
     <html className={`${roboto.className} ${robotoSlab.className}`}>
-      <body className="container">
-        <RefreshRouteOnSave />
-        <SiteHeader {...(nav as Nav)} />
-        <Content>{children}</Content>
+      <body className="website">
+        <div className='container'>
+          <RefreshRouteOnSave />
+          <SiteHeader {...(nav as Nav)} />
+          <Content>{children}</Content>
 
-        <div className="footer">
-          <span>
-            Copyright © {new Date().getFullYear()} {nav?.title}
-          </span>
-          {/* <a href="/feed" rel="external" className="link">
-            Subscribe to RSS Feed
-          </a> */}
+          <div className="footer">
+            <span>
+              Copyright © {new Date().getFullYear()} {nav?.title}
+            </span>
+            {/* <a href="/feed" rel="external" className="link">
+              Subscribe to RSS Feed
+            </a> */}
+          </div>
         </div>
       </body>
     </html>

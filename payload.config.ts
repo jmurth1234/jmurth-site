@@ -1,7 +1,7 @@
 import path from 'path'
 // import { postgresAdapter } from '@payloadcms/db-postgres'
 import { en } from 'payload/i18n/en'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 
 //import { slateEditor } from '@payloadcms/richtext-slate'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
@@ -17,6 +17,8 @@ import Media from '@/collections/Media'
 import Homepage from '@/globals/Homepage'
 import Nav from '@/globals/Nav'
 // simport { cloudflareAdapter } from 'payload-cloud-storage-cf-img-adapter'
+
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -75,4 +77,21 @@ export default buildConfig({
   // This is temporary - we may make an adapter pattern
   // for this before reaching 3.0 stable
   sharp,
+  plugins: [
+    formBuilderPlugin({
+      fields: {
+        payment: false,
+        country: false,
+        state: false,
+      },
+      formOverrides: {
+        fields: ({ defaultFields }) => {
+          return [
+            ...defaultFields,
+            lexicalHTML('confirmationMessage', { name: 'confirmationHtml' }),
+          ]
+        },
+      },
+    }),
+  ],
 })

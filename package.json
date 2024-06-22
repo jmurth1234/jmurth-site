@@ -25,6 +25,7 @@
     "@payloadcms/live-preview-react": "3.0.0-beta.47",
     "@payloadcms/next": "3.0.0-beta.47",
     "@payloadcms/plugin-cloud-storage": "^1.1.2",
+    "@payloadcms/plugin-form-builder": "3.0.0-beta.47",
     "@payloadcms/richtext-lexical": "3.0.0-beta.47",
     "@payloadcms/richtext-slate": "3.0.0-beta.47",
     "@payloadcms/ui": "3.0.0-beta.47",
@@ -42,8 +43,10 @@
     "payload": "3.0.0-beta.47",
     "react": "19.0.0-rc-f994737d14-20240522",
     "react-dom": "19.0.0-rc-f994737d14-20240522",
+    "react-hook-form": "^7.51.5",
     "react-markdown": "^9.0.1",
     "react-mde": "^11.5.0",
+    "react-select": "^5.8.0",
     "rehype-raw": "^7.0.0",
     "sharp": "0.33.4",
     "slugify": "^1.6.6"

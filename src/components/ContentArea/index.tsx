@@ -3,6 +3,7 @@ import React from 'react'
 import { Post, Page, Project } from 'payload-types'
 import { Markdown } from '../Markdown'
 import RichText from '../RichText'
+import { FormBlock, FormBlockType } from '../Form'
 
 // Extract the type of `contentArea` from the above union
 type PostContentArea = NonNullable<Post['contentArea']>
@@ -28,6 +29,8 @@ function ContentArea(props: Props) {
       return <Markdown leftAlign={props.leftAlign}>{area.content}</Markdown>
     case 'rich-text-area':
       return <RichText content={area.html} leftAlign={props.leftAlign} />
+    case 'formBlock':
+      return <FormBlock {...(area as FormBlockType)} />
     default:
       // render json of contentArea if blockType is not recognized
       return <pre>{JSON.stringify(area, null, 2)}</pre>

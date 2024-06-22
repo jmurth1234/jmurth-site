@@ -53,13 +53,13 @@ const Projects: CollectionConfig = {
       name: 'source',
       label: 'Source',
       type: 'text',
-      required: true,
+      required: false,
     },
     {
       name: 'site',
       label: 'Site',
       type: 'text',
-      required: true,
+      required: false,
     },
     {
       name: 'category',

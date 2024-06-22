@@ -34,10 +34,12 @@ const Page = async (props: PageParams) => {
       <PageHeader
         title={project.title}
         description={`Status: ${capitalize(project.state)}`}
-        links={[
-          { href: project.site, label: 'Project Site' },
-          { href: project.source, label: 'Source Code' },
-        ]}
+        links={
+          [
+            !!project.site && { href: project.site, label: 'Project Site' },
+            !!project.source && { href: project.source, label: 'Source Code' },
+          ].filter(Boolean) as { href: string; label: string }[]
+        }
       />
       <article className="content">
         {project?.contentArea?.map((area) => (

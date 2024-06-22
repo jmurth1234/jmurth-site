@@ -1,6 +1,6 @@
 import { Block, Field } from 'payload/types'
 import Editor from '../../components/Editor'
-import { lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
+import { HeadingFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 import { lexicalConfig } from './lib/editor-config'
 
 const MarkdownBlock: Block = {
@@ -59,6 +59,44 @@ const ImageBlock: Block = {
   ],
 }
 
+export const FormBlock: Block = {
+  slug: 'formBlock',
+  fields: [
+    {
+      name: 'form',
+      type: 'relationship',
+      relationTo: 'forms',
+      required: true,
+    },
+    {
+      name: 'enableIntro',
+      type: 'checkbox',
+      label: 'Enable Intro Content',
+    },
+    {
+      name: 'introContent',
+      type: 'richText',
+      admin: {
+        condition: (_, { enableIntro }) => Boolean(enableIntro),
+      },
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [...rootFeatures, HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3'] })]
+        },
+      }),
+      label: 'Intro Content',
+    },
+    lexicalHTML('introContent', { name: 'introHtml' }),
+  ],
+  graphQL: {
+    singularName: 'FormBlock',
+  },
+  labels: {
+    plural: 'Form Blocks',
+    singular: 'Form Block',
+  },
+}
+
 const ContentArea: Field = {
   name: 'contentArea',
   type: 'blocks',
@@ -66,7 +104,7 @@ const ContentArea: Field = {
     singular: 'Content Area',
     plural: 'Content Areas',
   },
-  blocks: [MarkdownBlock, RichTextArea, ImageBlock],
+  blocks: [MarkdownBlock, RichTextArea, ImageBlock, FormBlock],
 }
 
 export default ContentArea
