@@ -5,7 +5,7 @@ import Link from 'next/link'
 const SiteHeader = (props: Nav) => {
   return (
     <>
-      <header className="mt-4 bg-nav-header font-serif text-white rounded shadow-md -mb-20 md:mt-8">
+      <header className="lg:mt-4 bg-nav-header font-serif text-white rounded shadow-md -mb-20">
         <div className="p-8 text-center">
           <div className="mb-12">
             <h1 className="text-4xl font-bold mb-2">{props.title}</h1>
