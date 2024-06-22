@@ -38,7 +38,9 @@ const config = {
   plugins: [
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
   ],
 }
 
