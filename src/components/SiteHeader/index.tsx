@@ -15,7 +15,7 @@ const SiteHeader = (props: Nav) => {
       </header>
 
       <nav className="sticky top-0 z-10 px-8 py-4 text-white">
-        <div className="flex flex-row gap-4 bg-nav-bar rounded shadow-xl overflow-x-auto md:justify-center">
+        <div className="flex flex-row gap-4 bg-nav-bar rounded shadow-xl overflow-x-auto md:justify-center px-4">
           {props.items?.map((item) => (
             <Link key={item.id} href={item.link} className="p-2 rounded">
               {item.label}
