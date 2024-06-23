@@ -4,6 +4,9 @@ const Nav: GlobalConfig = {
   slug: 'nav',
   access: {
     read: () => true,
+    update: ({ req }) => {
+      return !!req.user
+    },
   },
   fields: [
     { name: 'title', type: 'text', required: true },
@@ -38,9 +41,9 @@ const Nav: GlobalConfig = {
       access: {
         read: ({ req }) => {
           return !!req.user
-        }
-      }
-    }
+        },
+      },
+    },
   ],
 }
 

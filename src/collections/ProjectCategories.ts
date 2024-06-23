@@ -7,6 +7,12 @@ const ProjectCategories: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
+    create: ({ req }) => {
+      return !!req.user
+    },
+    update: ({ req }) => {
+      return !!req.user
+    },
     read: ({ req }) => {
       if (req.user) return true
 
@@ -15,6 +21,12 @@ const ProjectCategories: CollectionConfig = {
           equals: 'published',
         },
       }
+    },
+    readVersions: ({ req }) => {
+      return !!req.user
+    },
+    delete: ({ req }) => {
+      return !!req.user
     },
   },
   fields: [

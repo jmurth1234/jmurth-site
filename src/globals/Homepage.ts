@@ -5,6 +5,9 @@ const Homepage: GlobalConfig = {
   slug: 'homepage',
   access: {
     read: () => true,
+    update: ({ req }) => {
+      return !!req.user
+    },
   },
   admin: {
     livePreview: {

@@ -2,6 +2,20 @@ import { CollectionConfig } from 'payload/types'
 
 const Media: CollectionConfig = {
   slug: 'media',
+  access: {
+    create: ({ req }) => {
+      return !!req.user
+    },
+    update: ({ req }) => {
+      return !!req.user
+    },
+    read: ({ req }) => {
+      return true
+    },
+    delete: ({ req }) => {
+      return !!req.user
+    },
+  },
   upload: {
     // staticURL: '/media',
     staticDir: 'media',

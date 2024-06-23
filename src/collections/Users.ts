@@ -8,6 +8,20 @@ const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
+  access: {
+    create: ({ req }) => {
+      return !!req.user
+    },
+    update: ({ req }) => {
+      return !!req.user
+    },
+    read: ({ req }) => {
+      return !!req.user
+    },
+    delete: ({ req }) => {
+      return !!req.user
+    },
+  },
   fields: [
     // Email added by default
     // Add more fields as needed

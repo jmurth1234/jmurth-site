@@ -9,6 +9,12 @@ const Projects: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
+    create: ({ req }) => {
+      return !!req.user
+    },
+    update: ({ req }) => {
+      return !!req.user
+    },
     read: ({ req }) => {
       if (req.user) return true
 
@@ -17,6 +23,12 @@ const Projects: CollectionConfig = {
           equals: 'published',
         },
       }
+    },
+    readVersions: ({ req }) => {
+      return !!req.user
+    },
+    delete: ({ req }) => {
+      return !!req.user
     },
   },
   fields: [
