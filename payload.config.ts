@@ -5,7 +5,7 @@ import { lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 
 //import { slateEditor } from '@payloadcms/richtext-slate'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { buildConfig } from 'payload/config'
+import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { fileURLToPath } from 'url'
 import Users from '@/collections/Users'
