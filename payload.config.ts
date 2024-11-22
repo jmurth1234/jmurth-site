@@ -3,7 +3,6 @@ import path from 'path'
 import { en } from 'payload/i18n/en'
 import { lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 
-//import { slateEditor } from '@payloadcms/richtext-slate'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
