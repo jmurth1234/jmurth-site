@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
-type PageParams = { params: { slug: string } }
+type PageParams = { params: Promise<{ slug: string }> }
 const Page = async (props: PageParams) => {
   const { payload, user } = await getPayload()
 
@@ -14,7 +14,7 @@ const Page = async (props: PageParams) => {
     collection: 'projects',
     where: {
       slug: {
-        equals: props.params.slug,
+        equals: (await props.params).slug,
       },
     },
     limit: 1,
@@ -42,7 +42,7 @@ const Page = async (props: PageParams) => {
         }
       />
       <article className="content">
-        {project?.contentArea?.map((area) => (
+        {project?.contentArea?.map((area: any) => (
           <div key={area.id} data-area={area.blockType}>
             <ContentArea area={area} />
           </div>
@@ -52,7 +52,8 @@ const Page = async (props: PageParams) => {
   )
 }
 
-export async function generateMetadata({ params }: PageParams, parent: ResolvingMetadata) {
+export async function generateMetadata(props: PageParams, parent: ResolvingMetadata) {
+  const params = await props.params;
   const metadata = await parent
   const { payload } = await getPayload()
 

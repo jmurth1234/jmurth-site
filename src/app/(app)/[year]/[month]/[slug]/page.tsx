@@ -4,17 +4,16 @@ import ContentArea from '@/components/ContentArea'
 import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 
-type PageParams = { params: { year: string; month: string; slug: string } }
+type PageParams = { params: Promise<{ year: string; month: string; slug: string }> }
 const Page = async (props: PageParams) => {
-  console.log('props', props)
-
   const { payload, user } = await getPayload()
+  const params = await props.params
 
   const posts = await payload.find({
     collection: 'posts',
     where: {
       url: {
-        equals: `/${props.params.year}/${props.params.month}/${props.params.slug}`,
+        equals: `/${params.year}/${params.month}/${params.slug}`,
       },
     },
     limit: 1,
@@ -36,7 +35,7 @@ const Page = async (props: PageParams) => {
         description={new Date(post.createdAt).toLocaleDateString('en-GB')}
       />
       <article className="content">
-        {post?.contentArea?.map((area) => (
+        {post?.contentArea?.map((area: any) => (
           <div key={area.id} data-area={area.blockType}>
             <ContentArea area={area} />
           </div>
@@ -46,7 +45,8 @@ const Page = async (props: PageParams) => {
   )
 }
 
-export async function generateMetadata({ params }: PageParams, parent: ResolvingMetadata) {
+export async function generateMetadata(props: PageParams, parent: ResolvingMetadata) {
+  const params = await props.params
   const metadata = await parent
   const { payload } = await getPayload()
 

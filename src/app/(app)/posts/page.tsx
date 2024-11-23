@@ -7,7 +7,8 @@ import PostSummary, { PostExcerpt } from '@/components/PostSummary'
 import { createDataSummary } from '@/data/data-summary-creator'
 import Link from 'next/link'
 
-const Page = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+const Page = async (props: { searchParams: Promise<Record<string, string>> }) => {
+  const searchParams = await props.searchParams;
   const { payload, user } = await getPayload()
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1
 

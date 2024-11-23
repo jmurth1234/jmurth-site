@@ -4,10 +4,8 @@ import ContentArea from '@/components/ContentArea'
 import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 
-const Page = async (props: { params: { pageSlug: string[] } }) => {
-  console.log('props', props)
-
-  const { pageSlug } = props.params
+const Page = async (props: { params: Promise<{ pageSlug: string[] }> }) => {
+  const { pageSlug } = await props.params
 
   if (!pageSlug || pageSlug.length === 0) {
     return notFound()
@@ -49,9 +47,10 @@ const Page = async (props: { params: { pageSlug: string[] } }) => {
 }
 
 export async function generateMetadata(
-  { params }: { params: { pageSlug: string[] } },
+  props: { params: Promise<{ pageSlug: string[] }> },
   parent: ResolvingMetadata,
 ) {
+  const params = await props.params
   const metadata = await parent
   const { payload } = await getPayload()
 
