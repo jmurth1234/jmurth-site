@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload/types'
+import { CollectionConfig } from 'payload'
 import slugify from 'slugify'
 import ContentArea from '../fields/content-area'
 

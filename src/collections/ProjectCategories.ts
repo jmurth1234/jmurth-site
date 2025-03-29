@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload/types'
+import { CollectionConfig } from 'payload'
 import ContentArea from '../fields/content-area'
 
 const ProjectCategories: CollectionConfig = {

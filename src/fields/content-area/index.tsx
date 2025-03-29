@@ -1,4 +1,4 @@
-import { Block, Field } from 'payload/types'
+import { Block, Field } from 'payload'
 import Editor from '../../components/Editor'
 import { HeadingFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
 import { lexicalConfig } from './lib/editor-config'

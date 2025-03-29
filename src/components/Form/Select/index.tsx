@@ -4,7 +4,7 @@ import React from 'react'
 import { Controller } from 'react-hook-form'
 import ReactSelect from 'react-select'
 
-import { SelectField } from 'payload/types'
+import { SelectField } from 'payload'
 
 export const Select: React.FC<
   SelectField & {

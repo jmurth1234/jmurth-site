@@ -1,5 +1,5 @@
 import { HTMLConverterFeature, lexicalEditor, lexicalHTML } from '@payloadcms/richtext-lexical'
-import { GlobalConfig } from 'payload/types'
+import { GlobalConfig } from 'payload'
 
 const Homepage: GlobalConfig = {
   slug: 'homepage',

@@ -13,7 +13,7 @@ lexicalConfig.features = [...defaultEditorFeatures, HTMLConverterFeature({})] as
 
 import { createHeadlessEditor } from '@lexical/headless'
 import { getEnabledNodes } from '@payloadcms/richtext-lexical'
-import { SanitizedConfig } from 'payload/types'
+import { SanitizedConfig } from 'payload'
 
 export const getHeadlessEditor = async (config: SanitizedConfig) => {
   const editorConfig = await sanitizeServerEditorConfig(lexicalConfig, config)
