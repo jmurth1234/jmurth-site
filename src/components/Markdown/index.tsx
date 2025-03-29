@@ -17,6 +17,7 @@ function Markdown(props: Props) {
     <ReactMarkdown
       rehypePlugins={[rehypeRaw]}
       {...rest}
+      // @ts-ignore bad types
       className={classNames('prose-xl prose', leftAlign && 'leftAlign')}
     />
   )
