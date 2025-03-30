@@ -1,5 +1,6 @@
+import config from '@payload-config'
 import { getPayload } from 'payload'
-import { importConfig } from 'payload/node'
+
 import 'dotenv/config'
 import retrieveFrontmatter from './retrieve-frontmatter'
 import slugify from 'slugify'
@@ -9,8 +10,8 @@ function filterTrailingSlash(str: string) {
 }
 
 const createPages = async () => {
-  const awaitedConfig = await importConfig('../../payload.config.ts')
-  const payload = await getPayload({ config: awaitedConfig })
+  // Get payload instance
+  const payload = await getPayload({ config })
 
   try {
     await Promise.all(
