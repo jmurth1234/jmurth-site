@@ -14,11 +14,8 @@ interface Props extends ReactMarkdownOptions {
 function Markdown(props: Props) {
   const { leftAlign, ...rest } = props
   return (
-    <ReactMarkdown
-      rehypePlugins={[rehypeRaw]}
-      {...rest}
-      // @ts-ignore bad types
-      className={classNames('prose-xl prose', leftAlign && 'leftAlign')}
-    />
+    <div className={classNames('prose-xl prose', leftAlign && 'leftAlign')}>
+      <ReactMarkdown rehypePlugins={[rehypeRaw]} {...rest} />
+    </div>
   )
 }
