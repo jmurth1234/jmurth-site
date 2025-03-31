@@ -1,7 +1,21 @@
+entryPoints:
+  web:
+    address: ":3333"
+
+api:
+  dashboard: true
+  insecure: true
+  port: 3334
+
+providers:
+  docker:
+    exposedByDefault: false
+    swarmMode: true
+
 http:
   routers:
     nextjs-app:
-      rule: "Host(`jmurth.dev`)"
+      rule: "Host(`jmurth.co.uk`)"
       service: nextjs-app
       entryPoints:
         - web

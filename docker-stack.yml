@@ -18,7 +18,7 @@ services:
         max_attempts: 3
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.nextjs.rule=Host(`jmurth.dev`)"
+        - "traefik.http.routers.nextjs.rule=Host(`jmurth.co.uk`)"
         - "traefik.http.services.nextjs.loadbalancer.server.port=3000"
         - "traefik.http.routers.nextjs.service=nextjs"
     environment:
@@ -46,18 +46,17 @@ services:
   traefik:
     image: traefik:v3.3
     command:
-      - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.swarmMode=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:3333"
-      - "--api.dashboard=true"
-      - "--api.dashboard.port=3334"
+      - "--providers.file.directory=/etc/traefik"
+      - "--providers.file.watch=true"
     ports:
       - "3333:3333"
       - "3334:3334"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml
     deploy:
       placement:
         constraints:
