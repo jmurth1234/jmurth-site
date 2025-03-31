@@ -1,0 +1,13 @@
+http:
+  routers:
+    nextjs-app:
+      rule: "Host(`jmurth.dev`)"
+      service: nextjs-app
+      entryPoints:
+        - web
+  
+  services:
+    nextjs-app:
+      loadBalancer:
+        servers:
+          - url: "http://nextjs-app:3000" 
