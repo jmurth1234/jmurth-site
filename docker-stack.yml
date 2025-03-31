@@ -46,9 +46,8 @@ services:
   traefik:
     image: traefik:v3.3
     command:
-      - "--providers.docker=true"
-      - "--providers.docker.swarmMode=true"
-      - "--providers.docker.exposedbydefault=false"
+      - "--providers.swarm=true"
+      - "--providers.swarm.exposedbydefault=false"
       - "--providers.file.directory=/etc/traefik"
       - "--providers.file.watch=true"
     ports:
