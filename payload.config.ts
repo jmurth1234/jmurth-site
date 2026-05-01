@@ -15,6 +15,7 @@ import Posts from '@/collections/Posts'
 import Media from '@/collections/Media'
 import Homepage from '@/globals/Homepage'
 import Nav from '@/globals/Nav'
+import SiteSettings from '@/globals/SiteSettings'
 // simport { cloudflareAdapter } from 'payload-cloud-storage-cf-img-adapter'
 
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
@@ -26,7 +27,7 @@ export default buildConfig({
   //editor: slateEditor({}),
   editor: lexicalEditor(),
   collections: [Users, Projects, ProjectCategories, Pages, Posts, Media],
-  globals: [Homepage, Nav],
+  globals: [Homepage, Nav, SiteSettings],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     autoGenerate: true,

@@ -4,7 +4,7 @@ title: YT Player
 description: >-
   Web app to convert YouTube videos to MP3s and stream the result to the user to
   save bandwidth on poor connections
-source: 'https://github.com/rymate1234/yt-player'
+source: 'https://github.com/jmurth1234/yt-player'
 site: 'https://yt-player.rymate.co.uk'
 category: OSS Application
 status: active

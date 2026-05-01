@@ -4,8 +4,8 @@ title: UWP Menu Bar
 description: >-
   A traditional menu bar style component for UWP apps. Created for WinIRC,
   replaced by an official menu bar for UWP
-source: 'https://github.com/rymate1234/UWPMenuBar'
-site: 'https://github.com/rymate1234/UWPMenuBar'
+source: 'https://github.com/jmurth1234/UWPMenuBar'
+site: 'https://github.com/jmurth1234/UWPMenuBar'
 category: OSS Library
 status: legacy
 date: 2019-05-19T16:25:22.755Z

@@ -26,18 +26,28 @@ export const Checkbox: React.FC<
   width,
 }) => {
   const isCheckboxChecked = getValues(name)
+  const fieldError = errors?.[name]
 
   return (
-    <label htmlFor={name}>
+    <div>
+      <label htmlFor={name} className="flex items-center gap-2 font-bold text-slate-800">
       <input
         type="checkbox"
         id={name}
-        
+        aria-invalid={!!fieldError}
+        aria-describedby={fieldError ? `${name}-error` : undefined}
+        required={!!requiredFromProps}
         checked={isCheckboxChecked}
         {...register(name, { required: requiredFromProps })}
       />
       {label}
       {requiredFromProps && <span>*</span>}
-    </label>
+      </label>
+      {fieldError && (
+        <p id={`${name}-error`} className="mt-1 text-sm font-bold text-red-700">
+          {label || 'This field'} is required.
+        </p>
+      )}
+    </div>
   )
 }

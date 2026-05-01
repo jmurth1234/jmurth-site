@@ -1,5 +1,4 @@
 import getPayload from '@/lib/payload-getter'
-import { ResolvingMetadata } from 'next'
 import PageSection from '@/components/PageSection'
 import CardArea from '@/components/CardArea'
 import ProjectSummary from '@/components/ProjectSummary'
@@ -9,6 +8,12 @@ import PageHeader from '@/components/PageHeader'
 
 const Page = async ({}) => {
   const { payload, user } = await getPayload()
+
+  const siteSettings = await payload.findGlobal({
+    slug: 'site-settings',
+    user,
+    overrideAccess: false,
+  })
 
   const result = await payload.find({
     collection: 'projects',
@@ -48,7 +53,13 @@ const Page = async ({}) => {
 
   return (
     <main>
-      <PageHeader title="All Projects" />
+      <PageHeader
+        title={siteSettings?.projectsTitle || 'Projects'}
+        description={
+          siteSettings?.projectsDescription ||
+          'A curated portfolio plus a historical archive of open-source tools, apps, experiments, and older work.'
+        }
+      />
       {categories.map((category) => (
         <PageSection key={category.category.id} title={category.category.title}>
           {category.category.contentArea && (
@@ -67,11 +78,15 @@ const Page = async ({}) => {
   )
 }
 
-export async function generateMetadata(_: {}, parent: ResolvingMetadata) {
-  const metadata = await parent
+export async function generateMetadata() {
+  const { payload } = await getPayload()
+  const siteSettings = await payload.findGlobal({
+    slug: 'site-settings',
+  })
 
   return {
-    title: `All Projects | ${metadata.title?.absolute}`,
+    title: siteSettings?.projectsTitle || 'Projects',
+    description: siteSettings?.projectsDescription || 'Project portfolio and historical archive for Jess Murthick.',
   }
 }
 

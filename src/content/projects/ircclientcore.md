@@ -2,8 +2,8 @@
 type: project
 title: IrcClientCore
 description: A shared library between the various .NET IRC clients I've created
-source: 'https://github.com/rymate1234/IrcClientCore'
-site: 'https://github.com/rymate1234/IrcClientCore'
+source: 'https://github.com/jmurth1234/IrcClientCore'
+site: 'https://github.com/jmurth1234/IrcClientCore'
 category: OSS Library
 status: active
 date: 2019-05-19T15:43:24.874Z

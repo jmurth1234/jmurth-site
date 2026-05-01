@@ -1,8 +1,8 @@
 ---
 title: Vue Tab Complete Input
 description: An open source <input> based component for Vue.js that adds tab completion.
-source: https://github.com/rymate1234/tab-complete-input-vue/
-site: https://vue-tab-complete-input.netlify.com/
+source: https://github.com/jmurth1234/tab-complete-input-vue/
+site: https://github.com/jmurth1234/tab-complete-input-vue/
 status: active
 category: OSS Library
 type: project

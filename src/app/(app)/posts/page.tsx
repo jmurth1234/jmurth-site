@@ -1,5 +1,4 @@
 import getPayload from '@/lib/payload-getter'
-import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 import PageSection from '@/components/PageSection'
 import CardArea from '@/components/CardArea'
@@ -10,6 +9,11 @@ import Link from 'next/link'
 const Page = async (props: { searchParams: Promise<Record<string, string>> }) => {
   const searchParams = await props.searchParams;
   const { payload, user } = await getPayload()
+  const siteSettings = await payload.findGlobal({
+    slug: 'site-settings',
+    user,
+    overrideAccess: false,
+  })
   const page = searchParams.page ? parseInt(searchParams.page, 10) : 1
 
   const results = await payload.find({
@@ -37,7 +41,13 @@ const Page = async (props: { searchParams: Promise<Record<string, string>> }) =>
 
   return (
     <main>
-      <PageSection title="All Posts">
+      <PageSection
+        title={siteSettings?.postsTitle || 'Writing'}
+        description={
+          siteSettings?.postsDescription ||
+          'Recent posts plus the older site archive, preserved as historical notes.'
+        }
+      >
         <CardArea>
           {posts?.map((post: PostExcerpt) => (
             <PostSummary key={post.id} post={post} />
@@ -47,7 +57,7 @@ const Page = async (props: { searchParams: Promise<Record<string, string>> }) =>
         <CardArea grid>
           {page > 1 && (
             <Link href={`/posts?page=${page - 1}`} className="card">
-              {'<<'} See Newer Posts
+              &lt;- See newer posts
             </Link>
           )}
 
@@ -55,7 +65,7 @@ const Page = async (props: { searchParams: Promise<Record<string, string>> }) =>
 
           {hasMore && (
             <Link href={`/posts?page=${page + 1}`} className="card">
-              See Older Posts {'>>'}
+              See older posts -&gt;
             </Link>
           )}
         </CardArea>
@@ -64,11 +74,15 @@ const Page = async (props: { searchParams: Promise<Record<string, string>> }) =>
   )
 }
 
-export async function generateMetadata(_: {}, parent: ResolvingMetadata) {
-  const metadata = await parent
+export async function generateMetadata() {
+  const { payload } = await getPayload()
+  const siteSettings = await payload.findGlobal({
+    slug: 'site-settings',
+  })
 
   return {
-    title: `All Posts | ${metadata.title?.absolute}`,
+    title: siteSettings?.postsTitle || 'Writing',
+    description: siteSettings?.postsDescription || 'Posts and archive notes from Jess Murthick.',
   }
 }
 

@@ -2,8 +2,7 @@
 type: project
 title: 'AOSP Music+'
 description: A fork of the AOSP Music application, with added enhancements for modern Android
-source: 'https://github.com/rymate1234/AOSP-Music-Plus/'
-site: 'https://play.google.com/store/apps/details?id=net.rymate.music&hl=en_US'
+source: 'https://github.com/jmurth1234/AOSP-Music-Plus/'
 category: Android App
 status: legacy
 date: '2019-07-27'

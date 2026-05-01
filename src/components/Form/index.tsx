@@ -44,6 +44,7 @@ export const FormBlock: React.FC<
 
   const formMethods = useForm({
     defaultValues: buildInitialFormState(formFromProps.fields),
+    mode: 'onBlur',
   })
   const {
     control,
@@ -132,11 +133,24 @@ export const FormBlock: React.FC<
       {!isLoading && hasSubmitted && confirmationType === 'message' && (
         <RichText content={confirmationHtml} />
       )}
-      {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
-      {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
+      {isLoading && !hasSubmitted && (
+        <p className="rounded-md border border-slate-200 bg-white p-4 font-bold text-slate-700" role="status">
+          Sending, please wait...
+        </p>
+      )}
+      {error && (
+        <div className="rounded-md border border-red-200 bg-red-50 p-4 font-bold text-red-800" role="alert">
+          {`${error.status || '500'}: ${error.message || ''}`}
+        </div>
+      )}
       {!hasSubmitted && (
-        <form id={formID} onSubmit={handleSubmit(onSubmit)} className="prose">
-          <div>
+        <form id={formID} onSubmit={handleSubmit(onSubmit)} className="prose" noValidate>
+          {Object.keys(errors).length > 0 && (
+            <div className="mb-4 rounded-md border border-red-200 bg-red-50 p-4 text-sm font-bold text-red-800" role="alert">
+              Please check the highlighted fields.
+            </div>
+          )}
+          <div className="space-y-4">
             {formFromProps &&
               formFromProps.fields &&
               formFromProps.fields.map((field, index) => {
@@ -162,7 +176,8 @@ export const FormBlock: React.FC<
           </div>
           <button
             type="submit"
-            className="bg-nav-header hover:bg-nav-bar text-white py-2 px-4 rounded shadow-xl mt-4"
+            disabled={isLoading}
+            className="btn-primary mt-4 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {submitButtonLabel || 'Submit'}
           </button>

@@ -99,10 +99,12 @@ export interface Config {
   globals: {
     homepage: Homepage;
     nav: Nav;
+    'site-settings': SiteSetting;
   };
   globalsSelect: {
     homepage: HomepageSelect<false> | HomepageSelect<true>;
     nav: NavSelect<false> | NavSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -156,84 +158,65 @@ export interface Project {
   id: string;
   title: string;
   featured?: boolean | null;
+  /**
+   * Use for the richer portfolio/project showcase treatment.
+   */
+  showcase?: boolean | null;
+  /**
+   * Lower numbers appear first when projects are curated manually.
+   */
+  showcaseOrder?: number | null;
   slug?: string | null;
   description: string;
+  /**
+   * A punchier one or two sentence summary for showcase cards and hero sections.
+   */
+  shortDeck?: string | null;
+  role?: string | null;
+  timeframe?: string | null;
+  /**
+   * Context shown on legacy or inactive projects without rewriting the historical page copy.
+   */
+  archiveNote?: string | null;
+  featuredMedia?: (string | null) | Media;
+  gallery?: (string | Media)[] | null;
+  techStack?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  outcomes?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  links?:
+    | {
+        label: string;
+        url: string;
+        kind?: ('site' | 'source' | 'demo' | 'docs' | 'article' | 'store') | null;
+        primary?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Legacy fallback. Prefer Structured Links for new project data.
+   */
   source?: string | null;
+  /**
+   * Legacy fallback. Prefer Structured Links for new project data.
+   */
   site?: string | null;
   category?: (string | null) | ProjectCategory;
   state: 'active' | 'inactive' | 'legacy';
-  contentArea?:
-    | (
-        | {
-            content?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'markdown';
-          }
-        | {
-            content?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            html?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'rich-text-area';
-          }
-        | {
-            image?: (string | null) | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'image';
-          }
-        | {
-            form: string | Form;
-            enableIntro?: boolean | null;
-            introContent?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            introHtml?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'formBlock';
-          }
-      )[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "project-categories".
- */
-export interface ProjectCategory {
-  id: string;
-  title: string;
-  order: number;
   contentArea?:
     | (
         | {
@@ -342,6 +325,78 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "project-categories".
+ */
+export interface ProjectCategory {
+  id: string;
+  title: string;
+  order: number;
+  contentArea?:
+    | (
+        | {
+            content?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'markdown';
+          }
+        | {
+            content?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            html?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'rich-text-area';
+          }
+        | {
+            image?: (string | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'image';
+          }
+        | {
+            form: string | Form;
+            enableIntro?: boolean | null;
+            introContent?: {
+              root: {
+                type: string;
+                children: {
+                  type: string;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            introHtml?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'formBlock';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -767,8 +822,43 @@ export interface UsersSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   featured?: T;
+  showcase?: T;
+  showcaseOrder?: T;
   slug?: T;
   description?: T;
+  shortDeck?: T;
+  role?: T;
+  timeframe?: T;
+  archiveNote?: T;
+  featuredMedia?: T;
+  gallery?: T;
+  techStack?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  outcomes?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  links?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        kind?: T;
+        primary?: T;
+        id?: T;
+      };
   source?: T;
   site?: T;
   category?: T;
@@ -1177,6 +1267,28 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Homepage {
   id: string;
+  heroKicker?: string | null;
+  heroTitle?: string | null;
+  heroSummary?: string | null;
+  primaryCTA?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  secondaryCTA?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  focusLabel?: string | null;
+  /**
+   * Optional homepage curation. Falls back to featured projects when empty.
+   */
+  showcaseProjects?: (string | Project)[] | null;
+  projectsHeading?: string | null;
+  projectsSummary?: string | null;
+  projectsArchiveLinkLabel?: string | null;
+  postsHeading?: string | null;
+  postsSummary?: string | null;
+  postsArchiveLinkLabel?: string | null;
   introText: {
     root: {
       type: string;
@@ -1220,9 +1332,53 @@ export interface Nav {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  footerText?: string | null;
+  projectsTitle?: string | null;
+  projectsDescription?: string | null;
+  postsTitle?: string | null;
+  postsDescription?: string | null;
+  socialLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homepage_select".
  */
 export interface HomepageSelect<T extends boolean = true> {
+  heroKicker?: T;
+  heroTitle?: T;
+  heroSummary?: T;
+  primaryCTA?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  secondaryCTA?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  focusLabel?: T;
+  showcaseProjects?: T;
+  projectsHeading?: T;
+  projectsSummary?: T;
+  projectsArchiveLinkLabel?: T;
+  postsHeading?: T;
+  postsSummary?: T;
+  postsArchiveLinkLabel?: T;
   introText?: T;
   html?: T;
   _status?: T;
@@ -1249,6 +1405,27 @@ export interface NavSelect<T extends boolean = true> {
     | {
         label?: T;
         link?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  footerText?: T;
+  projectsTitle?: T;
+  projectsDescription?: T;
+  postsTitle?: T;
+  postsDescription?: T;
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;

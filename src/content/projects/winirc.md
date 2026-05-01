@@ -1,8 +1,8 @@
 ---
 title: WinIRC
 description: An IRC client for Windows 10 devices, written using C# and UWP
-source: https://github.com/rymate1234/WinIRC
-site: http://rymate1234.github.io/WinIRC/
+source: https://github.com/jmurth1234/WinIRC
+site: https://github.com/jmurth1234/WinIRC
 status: active
 category: OSS Application
 type: project

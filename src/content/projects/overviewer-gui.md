@@ -2,8 +2,8 @@
 type: project
 title: Overviewer GUI
 description: 'A desktop GUI for the Overviewer, written in C# / Winforms.'
-source: 'https://github.com/rymate1234/Overviewer-GUI'
-site: 'https://github.com/rymate1234/Overviewer-GUI'
+source: 'https://github.com/jmurth1234/Overviewer-GUI'
+site: 'https://github.com/jmurth1234/Overviewer-GUI'
 category: OSS Application
 status: active
 date: 2019-07-14T16:00:16.602Z

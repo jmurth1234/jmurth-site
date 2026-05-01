@@ -2,8 +2,7 @@
 type: project
 title: 'Rymate Notes'
 description: A basic notes taking app for android
-source: 'https://github.com/rymate1234/rymate-notes/'
-site: 'https://play.google.com/store/apps/details?id=net.rymate.notes&hl=en_US'
+source: 'https://github.com/jmurth1234/Rymate-Notes/'
 category: Android App
 status: legacy
 date: '2019-07-27'

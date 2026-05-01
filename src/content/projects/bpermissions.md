@@ -2,8 +2,7 @@
 type: project
 title: bPermissions
 description: A permissions plugin for Minecraft servers
-source: 'https://github.com/rymate1234/bPermissions/'
-site: 'https://dev.bukkit.org/projects/bpermissions'
+source: 'https://github.com/jmurth1234/bPermissions/'
 category: Bukkit Plugin
 status: inactive
 date: 2019-02-21T02:50:40.317Z

@@ -1,7 +1,6 @@
 import getPayload from '@/lib/payload-getter'
 import PageHeader from '@/components/PageHeader'
 import ContentArea from '@/components/ContentArea'
-import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 
 type PageParams = { params: Promise<{ year: string; month: string; slug: string }> }
@@ -32,7 +31,8 @@ const Page = async (props: PageParams) => {
     <main>
       <PageHeader
         title={post.title}
-        description={new Date(post.createdAt).toLocaleDateString('en-GB')}
+        createdAt={new Date(post.createdAt)}
+        eyebrow="Writing"
       />
       <article className="content">
         {post?.contentArea?.map((area: any) => (
@@ -45,9 +45,8 @@ const Page = async (props: PageParams) => {
   )
 }
 
-export async function generateMetadata(props: PageParams, parent: ResolvingMetadata) {
+export async function generateMetadata(props: PageParams) {
   const params = await props.params
-  const metadata = await parent
   const { payload } = await getPayload()
 
   const posts = await payload.find({
@@ -67,7 +66,7 @@ export async function generateMetadata(props: PageParams, parent: ResolvingMetad
   }
 
   return {
-    title: `${post.title} | ${metadata.title?.absolute}`,
+    title: post.title,
     description: post.description,
   }
 }

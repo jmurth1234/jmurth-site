@@ -4,8 +4,7 @@ title: JPanel
 description: >-
   A web panel for a Minecraft server, distributed as a single self contained
   Bukkit plugin
-source: 'https://github.com/rymate1234/JPanel'
-site: 'http://dev.bukkit.org/bukkit-plugins/jpanel/'
+source: 'https://github.com/jmurth1234/JPanel'
 category: Bukkit Plugin
 status: inactive
 date: 2019-05-19T16:04:58.692Z

@@ -6,9 +6,7 @@ date: 2012-10-30T17:25:36+00:00
 menu: 'main'
 ---
 
-Wish to contact me? There are a few ways you can do so. One such way is to email me at
-&#114;&#121;&#097;&#110;&#046;&#109;&#117;&#114;&#116;&#104;&#105;&#099;&#107;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;
-or using the included contact form on this page.
+Wish to contact me? There are a few ways you can do so. One such way is to email me at contact@jmurth.co.uk or using the included contact form on this page.
 
 If you want something more real time, you can also chat to me on Esper -- just <a href="https://webchat.esper.net/?nick=&channels=rymate" target="_blank">click here</a> to launch a web client.
 

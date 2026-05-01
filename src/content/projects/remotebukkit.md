@@ -2,8 +2,6 @@
 type: project
 title: 'RemoteBukkit'
 description: A basic app to connect to a server running RemoteBukkit
-source: 'https://github.com/rymate1234/remotebukkit/'
-site: 'https://play.google.com/store/apps/details?id=net.rymate.remote&hl=en_US'
 category: Android App
 status: legacy
 date: '2019-07-27'

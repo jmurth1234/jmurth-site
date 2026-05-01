@@ -1,7 +1,6 @@
 import getPayload from '@/lib/payload-getter'
 import PageHeader from '@/components/PageHeader'
 import ContentArea from '@/components/ContentArea'
-import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 
 const Page = async (props: { params: Promise<{ pageSlug: string[] }> }) => {
@@ -48,10 +47,8 @@ const Page = async (props: { params: Promise<{ pageSlug: string[] }> }) => {
 
 export async function generateMetadata(
   props: { params: Promise<{ pageSlug: string[] }> },
-  parent: ResolvingMetadata,
 ) {
   const params = await props.params
-  const metadata = await parent
   const { payload } = await getPayload()
 
   const pages = await payload.find({
@@ -71,7 +68,7 @@ export async function generateMetadata(
   }
 
   return {
-    title: `${page.title} | ${metadata.title?.absolute}`,
+    title: page.title,
     description: page.description,
   }
 }
