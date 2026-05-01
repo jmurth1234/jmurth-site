@@ -5,22 +5,7 @@ entryPoints:
 api:
   dashboard: true
   insecure: true
-  port: 3334
 
 providers:
   swarm:
     exposedByDefault: false
-
-http:
-  routers:
-    nextjs-app:
-      rule: "Host(`jmurth.co.uk`)"
-      service: nextjs-app
-      entryPoints:
-        - web
-  
-  services:
-    nextjs-app:
-      loadBalancer:
-        servers:
-          - url: "http://nextjs-app:3000" 

@@ -41,5 +41,6 @@ next-env.d.ts
 .env
 
 /media
+backups/
 
 docker-compose.yml

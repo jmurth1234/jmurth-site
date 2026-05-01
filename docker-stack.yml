@@ -2,12 +2,9 @@ version: '3.8'
 
 services:
   nextjs-app:
-    image: jmurth-site:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ${IMAGE_NAME:-jmurth-site}:${TAG:-latest}
     deploy:
-      replicas: 2
+      replicas: 1
       update_config:
         parallelism: 1
         delay: 10s
@@ -18,19 +15,20 @@ services:
         max_attempts: 3
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.nextjs.rule=Host(`jmurth.co.uk`)"
-        - "traefik.http.services.nextjs.loadbalancer.server.port=3000"
-        - "traefik.http.routers.nextjs.service=nextjs"
+        - "traefik.http.routers.${TRAEFIK_ROUTER_NAME:-jmurth-site}.rule=Host(`${SITE_HOST:-jmurth.co.uk}`)"
+        - "traefik.http.services.${TRAEFIK_SERVICE_NAME:-jmurth-site}.loadbalancer.server.port=3000"
+        - "traefik.http.routers.${TRAEFIK_ROUTER_NAME:-jmurth-site}.service=${TRAEFIK_SERVICE_NAME:-jmurth-site}"
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/jmurth-site
+      - PAYLOAD_SECRET=${PAYLOAD_SECRET}
+      - PAYLOAD_PUBLIC_SITE_URL=${PAYLOAD_PUBLIC_SITE_URL:-https://jmurth.co.uk}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://jmurth.co.uk}
       - PORT=3000
     networks:
       - app-network
-    depends_on:
-      - mongodb
 
   mongodb:
-    image: mongo:latest
+    image: mongo:4.4.6
     volumes:
       - mongodb_data:/data/db
     deploy:
@@ -46,16 +44,19 @@ services:
   traefik:
     image: traefik:v3.3
     command:
-      - "--providers.swarm=true"
-      - "--providers.swarm.exposedbydefault=false"
-      - "--providers.file.directory=/etc/traefik"
-      - "--providers.file.watch=true"
+      - "--configFile=/etc/traefik/traefik.yml"
     ports:
-      - "3333:3333"
-      - "3334:3334"
+      - target: 3333
+        published: ${HTTP_PORT:-3333}
+        protocol: tcp
+        mode: host
+      - target: 8080
+        published: ${TRAEFIK_DASHBOARD_PORT:-3334}
+        protocol: tcp
+        mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik.yml:/etc/traefik/traefik.yml
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
     deploy:
       placement:
         constraints:
@@ -71,4 +72,4 @@ networks:
 
 volumes:
   mongodb_data:
-    driver: local 
+    driver: local

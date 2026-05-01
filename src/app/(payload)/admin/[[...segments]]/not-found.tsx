@@ -8,17 +8,26 @@ import { importMap } from '../importMap'
 
 type Args = {
   params: Promise<{
-    segments: string[]
+    segments?: string[]
   }>
   searchParams: Promise<{
     [key: string]: string | string[]
   }>
 }
 
+const normalizeParams = async (params: Args['params']) => {
+  const resolvedParams = await params
+
+  return {
+    ...resolvedParams,
+    segments: resolvedParams?.segments?.length ? resolvedParams.segments : ['login'],
+  }
+}
+
 export const generateMetadata = ({ params, searchParams }: Args): Promise<Metadata> =>
-  generatePageMetadata({ config, params, searchParams })
+  generatePageMetadata({ config, params: normalizeParams(params), searchParams })
 
 const Page = ({ params, searchParams }: Args) =>
-  RootPage({ config, params, searchParams, importMap })
+  RootPage({ config, params: normalizeParams(params), searchParams, importMap })
 
 export default Page
