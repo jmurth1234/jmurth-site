@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../../tailwind.config.js";
 
 .website {
   @layer base {
@@ -62,6 +61,15 @@
 
 .container {
   @apply pb-8;
+}
+
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+
+  @media (width >= 64rem) {
+    max-width: 960px;
+  }
 }
 
 body {

@@ -1,4 +1,6 @@
-const colors = require('tailwindcss/colors')
+import colors from 'tailwindcss/colors'
+import forms from '@tailwindcss/forms'
+import typography from '@tailwindcss/typography'
 
 /** @type {import('tailwindcss').Config} */
 const config = {
@@ -13,17 +15,6 @@ const config = {
         },
       },
     },
-    container: {
-      center: true,
-      screens: {
-        sm: '100%',
-        md: '100%',
-        lg: '960px',
-        xl: '960px',
-        '2xl': '960px',
-        '3xl': '960px',
-      },
-    },
     fontFamily: {
       sans: ['Roboto', 'sans-serif'],
       serif: ['Roboto Slab', 'serif'],
@@ -36,9 +27,8 @@ const config = {
     },
   },
   plugins: [
-    require('@tailwindcss/line-clamp'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/forms')({
+    typography,
+    forms({
       strategy: 'class',
     }),
   ],
