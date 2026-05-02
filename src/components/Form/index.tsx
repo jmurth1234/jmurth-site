@@ -135,7 +135,7 @@ export const FormBlock: React.FC<
       {isLoading && !hasSubmitted && <p>Loading, please wait...</p>}
       {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
       {!hasSubmitted && (
-        <form id={formID} onSubmit={handleSubmit(onSubmit)} className="prose">
+        <form id={formID} onSubmit={handleSubmit(onSubmit)} className="content-form">
           <div>
             {formFromProps &&
               formFromProps.fields &&
@@ -162,7 +162,7 @@ export const FormBlock: React.FC<
           </div>
           <button
             type="submit"
-            className="bg-nav-header hover:bg-nav-bar text-white py-2 px-4 rounded shadow-xl mt-4"
+            className="button primary mt-2"
           >
             {submitButtonLabel || 'Submit'}
           </button>

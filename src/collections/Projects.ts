@@ -62,6 +62,51 @@ const Projects: CollectionConfig = {
       required: true,
     },
     {
+      name: 'summary',
+      label: 'Short Summary',
+      type: 'textarea',
+    },
+    {
+      name: 'techStack',
+      label: 'Tech Stack',
+      type: 'array',
+      maxRows: 12,
+      fields: [
+        {
+          name: 'label',
+          label: 'Label',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'role',
+      label: 'Role',
+      type: 'text',
+    },
+    {
+      name: 'impact',
+      label: 'Impact',
+      type: 'textarea',
+    },
+    {
+      name: 'year',
+      label: 'Year',
+      type: 'number',
+      min: 2000,
+      max: 2100,
+    },
+    {
+      name: 'priority',
+      label: 'Priority',
+      type: 'number',
+      admin: {
+        position: 'sidebar',
+        description: 'Higher numbers appear first when project lists use priority sorting.',
+      },
+    },
+    {
       name: 'source',
       label: 'Source',
       type: 'text',

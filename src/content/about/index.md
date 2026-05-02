@@ -8,15 +8,21 @@ menu: 'main'
 
 Hello, and welcome!
 
-I'm Ryan Murthick, and this is my personal website.
+I'm Jessica Murthick, and this is my personal website.
 
 I'm a software engineer currently working remotely at Clock, the company I did
-a year's placement at, and has recently graduated from my final year of university.
+a year's placement at before graduating from university with first class honours
+in 2020.
 
-Although I've historically done a lot of C# / Java development, I've increasingly
-ended up doing web development.
+Most of my work is in large, complex Node.js web applications and React Native
+apps, including performance work, CMS-backed sites, and integrations with LLMs
+and other AI tools.
+
+Recent personal projects have used similar technologies, although I also have a
+long archive of C#, Java, Android, Minecraft, and IRC-related projects from
+earlier years.
 
 Here's some other places you can find me:
 
-- [My Github](http://github.com/rymate1234): All of my open source projects, plus some unfinished ideas
-- [My Twitter](http://twitter.com/rymate1234): I occasionally tweet.
+- [My Github](https://github.com/jmurth1234): All of my open source projects, plus some unfinished ideas
+- [My Bluesky](https://bsky.app/profile/jmurth.co.uk): Not currently used much, although I hope to post more on it

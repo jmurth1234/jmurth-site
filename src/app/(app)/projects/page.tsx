@@ -6,6 +6,21 @@ import ProjectSummary from '@/components/ProjectSummary'
 import { Project, ProjectCategory } from 'payload-types'
 import ContentArea from '@/components/ContentArea'
 import PageHeader from '@/components/PageHeader'
+import { getAbsoluteUrl, getSeoTitle, getSiteSettings } from '@/lib/site'
+
+type ProjectWithPriority = Project & {
+  priority?: number | null
+}
+
+const sortProjects = (a: ProjectWithPriority, b: ProjectWithPriority) => {
+  const priorityDifference = (b.priority || 0) - (a.priority || 0)
+
+  if (priorityDifference !== 0) return priorityDifference
+  if (a.featured && !b.featured) return -1
+  if (b.featured && !a.featured) return 1
+
+  return a.title.localeCompare(b.title)
+}
 
 const Page = async ({}) => {
   const { payload, user } = await getPayload()
@@ -38,8 +53,7 @@ const Page = async ({}) => {
     }
 
     found.projects.push(project)
-
-    found.projects.sort((a, b) => a.featured && !b.featured ? -1 : b.featured && !a.featured ? 1 : 0)
+    found.projects.sort(sortProjects)
 
     return acc
   }, [])
@@ -48,7 +62,10 @@ const Page = async ({}) => {
 
   return (
     <main>
-      <PageHeader title="All Projects" />
+      <PageHeader
+        title="All Projects"
+        description="Selected software, libraries, experiments, and older projects."
+      />
       {categories.map((category) => (
         <PageSection key={category.category.id} title={category.category.title}>
           {category.category.contentArea && (
@@ -69,9 +86,21 @@ const Page = async ({}) => {
 
 export async function generateMetadata(_: {}, parent: ResolvingMetadata) {
   const metadata = await parent
+  const { payload } = await getPayload()
+  const siteSettings = await getSiteSettings(payload)
+  const description = 'Selected software, libraries, experiments, and older projects by Jessica Murthick.'
 
   return {
-    title: `All Projects | ${metadata.title?.absolute}`,
+    title: `All Projects | ${metadata.title?.absolute || getSeoTitle(siteSettings)}`,
+    description,
+    alternates: {
+      canonical: getAbsoluteUrl('/projects', siteSettings),
+    },
+    openGraph: {
+      title: 'All Projects',
+      description,
+      url: getAbsoluteUrl('/projects', siteSettings),
+    },
   }
 }
 

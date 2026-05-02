@@ -3,6 +3,9 @@ import PageHeader from '@/components/PageHeader'
 import ContentArea from '@/components/ContentArea'
 import { ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
+import JsonLd from '@/components/JsonLd'
+import { createDataSummary } from '@/data/data-summary-creator'
+import { getAbsoluteUrl, getPersonName, getSeoTitle, getSiteSettings } from '@/lib/site'
 
 type PageParams = { params: Promise<{ year: string; month: string; slug: string }> }
 const Page = async (props: PageParams) => {
@@ -28,11 +31,31 @@ const Page = async (props: PageParams) => {
     return notFound()
   }
 
+  const summary = post.description || createDataSummary(post).excerpt
+  const canonicalPath = `/${params.year}/${params.month}/${params.slug}`
+  const siteSettings = await getSiteSettings(payload)
+
   return (
     <main>
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: summary,
+          datePublished: post.createdAt,
+          dateModified: post.updatedAt,
+          author: {
+            '@type': 'Person',
+            name: getPersonName(siteSettings),
+          },
+          url: getAbsoluteUrl(canonicalPath, siteSettings),
+        }}
+      />
       <PageHeader
         title={post.title}
-        description={new Date(post.createdAt).toLocaleDateString('en-GB')}
+        createdAt={new Date(post.createdAt)}
+        description={post.description || undefined}
       />
       <article className="content">
         {post?.contentArea?.map((area: any) => (
@@ -49,6 +72,7 @@ export async function generateMetadata(props: PageParams, parent: ResolvingMetad
   const params = await props.params
   const metadata = await parent
   const { payload } = await getPayload()
+  const siteSettings = await getSiteSettings(payload)
 
   const posts = await payload.find({
     collection: 'posts',
@@ -67,8 +91,19 @@ export async function generateMetadata(props: PageParams, parent: ResolvingMetad
   }
 
   return {
-    title: `${post.title} | ${metadata.title?.absolute}`,
-    description: post.description,
+    title: `${post.title} | ${metadata.title?.absolute || getSeoTitle(siteSettings)}`,
+    description: post.description || createDataSummary(post).excerpt,
+    alternates: {
+      canonical: getAbsoluteUrl(`/${params.year}/${params.month}/${params.slug}`, siteSettings),
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description || createDataSummary(post).excerpt,
+      type: 'article',
+      publishedTime: post.createdAt,
+      modifiedTime: post.updatedAt,
+      url: getAbsoluteUrl(`/${params.year}/${params.month}/${params.slug}`, siteSettings),
+    },
   }
 }
 

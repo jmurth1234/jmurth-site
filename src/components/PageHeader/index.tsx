@@ -12,23 +12,28 @@ interface Props {
 
 const PageHeader = (props: Props) => {
   return (
-    <header className="p-8 font-serif">
-      <div className="text-center">
-        <div className="mb-6">
-          <h2 className="mb-2 text-4xl font-bold">{props.title}</h2>
+    <header className="page-header">
+      <div>
+        <div>
+          <h1>{props.title}</h1>
           {props.createdAt && (
             <span className="font-medium">{new Date(props.createdAt).toDateString()}</span>
           )}
 
           {props.description && (
-            <p className="font-medium">{props.description}</p>
+            <p>{props.description}</p>
           )}
 
-          {props.links?.length && (
-            <ul className="mt-4 flex flex-row gap-2 mx-auto content-center justify-center">
+          {!!props.links?.length && (
+            <ul className="button-row">
               {props.links.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="p-2 rounded bg-gray-200 hover:bg-gray-300">
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button secondary"
+                  >
                     {link.label}
                   </a>
                 </li>

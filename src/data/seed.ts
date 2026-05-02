@@ -39,6 +39,14 @@ const createPages = async () => {
         data: {
           title: page.frontmatter.title,
           description: page.frontmatter.description,
+          summary: page.frontmatter.summary,
+          techStack: Array.isArray(page.frontmatter.techStack)
+            ? page.frontmatter.techStack.map((label: string) => ({ label }))
+            : undefined,
+          role: page.frontmatter.role,
+          impact: page.frontmatter.impact,
+          year: page.frontmatter.year,
+          priority: page.frontmatter.priority,
           source: page.frontmatter.source,
           site: page.frontmatter.site,
           category: page.frontmatter.category,

@@ -2,13 +2,17 @@ import React from 'react'
 
 interface Props {
   title: string
+  intro?: string | null
   children: React.ReactNode
 }
 
-export default function PageSection({ title, children }: Props) {
+export default function PageSection({ title, intro, children }: Props) {
   return (
-    <section className="my-8">
-      <h2 className="mb-4 text-2xl font-bold">{title}</h2>
+    <section className="homepage-section">
+      <div className="section-heading">
+        <h2>{title}</h2>
+        {intro && <p>{intro}</p>}
+      </div>
       {children}
     </section>
   )

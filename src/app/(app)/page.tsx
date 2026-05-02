@@ -1,11 +1,16 @@
 import { createDataSummary } from '@/data/data-summary-creator'
-import RichText from '@/components/RichText'
-import PageSection from '@/components/PageSection'
-import CardArea from '@/components/CardArea'
-import PostSummary, { PostExcerpt } from '@/components/PostSummary'
-import ProjectSummary from '@/components/ProjectSummary'
-import Link from 'next/link'
+import { PostExcerpt } from '@/components/PostSummary'
 import getPayload from '@/lib/payload-getter'
+import HomepageSections from '@/components/HomepageSections'
+import JsonLd from '@/components/JsonLd'
+import {
+  getCanonicalBase,
+  getJobTitle,
+  getPersonName,
+  getProfileLinks,
+  getSeoDescription,
+  getSiteSettings,
+} from '@/lib/site'
 
 const Page = async () => {
   const { payload, user } = await getPayload()
@@ -13,12 +18,22 @@ const Page = async () => {
   const home = await payload.findGlobal({
     slug: 'homepage',
     draft: !!user,
+    user,
+    overrideAccess: false,
+    depth: 2,
   })
+
+  const siteSettings = await getSiteSettings(payload)
 
   const posts = await payload.find({
     collection: 'posts',
-    limit: 4,
+    limit: 12,
     sort: '-createdAt',
+    where: {
+      hidden: {
+        not_equals: true,
+      },
+    },
     overrideAccess: false,
     user,
     draft: !!user,
@@ -26,7 +41,9 @@ const Page = async () => {
 
   const projects = await payload.find({
     collection: 'projects',
-    limit: 4,
+    limit: 8,
+    sort: '-priority',
+    depth: 2,
     where: {
       featured: {
         equals: true,
@@ -38,33 +55,37 @@ const Page = async () => {
   })
 
   const formattedPosts = posts?.docs?.map((post) => createDataSummary(post))
+  const siteUrl = getCanonicalBase(siteSettings)
+  const profileLinks = getProfileLinks(siteSettings).map((link) => link.url)
 
   return (
     <main>
-      <RichText content={home?.html} />
-      <PageSection title="Latest Posts">
-        <CardArea grid>
-          {formattedPosts?.map((post: PostExcerpt) => (
-            <PostSummary key={post.id} post={post} />
-          ))}
-
-          <Link href="/posts" className="card">
-            See More {'>>'}
-          </Link>
-        </CardArea>
-      </PageSection>
-
-      <PageSection title="Featured Projects">
-        <CardArea grid>
-          {projects?.docs?.map((project) => (
-            <ProjectSummary key={project.id} project={project} />
-          ))}
-
-          <Link className="card" href="/projects">
-            See All Projects {'>>'}
-          </Link>
-        </CardArea>
-      </PageSection>
+      <JsonLd
+        data={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: getPersonName(siteSettings),
+            url: siteUrl,
+            description: getSeoDescription(siteSettings),
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: getPersonName(siteSettings),
+            jobTitle: getJobTitle(siteSettings),
+            url: siteUrl,
+            sameAs: profileLinks,
+            description: getSeoDescription(siteSettings),
+          },
+        ]}
+      />
+      <HomepageSections
+        home={home}
+        posts={(formattedPosts || []) as PostExcerpt[]}
+        fallbackProjects={projects?.docs || []}
+        siteSettings={siteSettings}
+      />
     </main>
   )
 }

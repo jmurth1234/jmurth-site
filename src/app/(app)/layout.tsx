@@ -6,6 +6,13 @@ import { Nav } from 'payload-types'
 import { Metadata, ResolvingMetadata } from 'next'
 import getPayload from '@/lib/payload-getter'
 import { RefreshRouteOnSave } from '@/components/RefreshRouteOnSave'
+import {
+  getCanonicalBase,
+  getMediaUrl,
+  getSeoDescription,
+  getSeoTitle,
+  getSiteSettings,
+} from '@/lib/site'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -20,7 +27,7 @@ const robotoSlab = Roboto_Slab({
 })
 
 function Content({ children }: { children: React.ReactNode }) {
-  return <div className="container">{children}</div>
+  return <div className="content-container">{children}</div>
 }
 
 /* Our app sits here to not cause any conflicts with payload's root layout  */
@@ -36,7 +43,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = async ({ children }) => 
   return (
     <html className={`${roboto.className} ${robotoSlab.className}`}>
       <body className="website">
-        <div className='container'>
+        <div className="site-shell">
           <RefreshRouteOnSave />
           <SiteHeader {...(nav as Nav)} />
           <Content>{children}</Content>
@@ -61,10 +68,36 @@ export async function generateMetadata(_: {}, parent: ResolvingMetadata): Promis
   const nav = await payload.findGlobal({
     slug: 'nav',
   })
+  const siteSettings = await getSiteSettings(payload)
+  const title = getSeoTitle(siteSettings) || nav?.title
+  const description = getSeoDescription(siteSettings) || nav?.tagline
+  const baseUrl = getCanonicalBase(siteSettings)
+  const socialImage = getMediaUrl(siteSettings?.socialImage, siteSettings)
 
   return {
-    title: nav?.title,
-    description: nav?.tagline,
+    metadataBase: new URL(baseUrl),
+    title,
+    description,
+    alternates: {
+      canonical: baseUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: baseUrl,
+      siteName: nav?.title || title,
+      type: 'website',
+      images: socialImage ? [{ url: socialImage }] : undefined,
+    },
+    twitter: {
+      card: socialImage ? 'summary_large_image' : 'summary',
+      title,
+      description,
+      images: socialImage ? [socialImage] : undefined,
+    },
+    icons: {
+      icon: '/crosshair.svg',
+    },
   }
 }
 

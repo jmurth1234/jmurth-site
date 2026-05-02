@@ -28,11 +28,10 @@ export const Checkbox: React.FC<
   const isCheckboxChecked = getValues(name)
 
   return (
-    <label htmlFor={name}>
+    <label htmlFor={name} className="form-checkbox">
       <input
         type="checkbox"
         id={name}
-        
         checked={isCheckboxChecked}
         {...register(name, { required: requiredFromProps })}
       />

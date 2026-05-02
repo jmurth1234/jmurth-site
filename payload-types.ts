@@ -102,10 +102,12 @@ export interface Config {
   globals: {
     homepage: Homepage;
     nav: Nav;
+    siteSettings: SiteSetting;
   };
   globalsSelect: {
     homepage: HomepageSelect<false> | HomepageSelect<true>;
     nav: NavSelect<false> | NavSelect<true>;
+    siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -170,6 +172,20 @@ export interface Project {
   featured?: boolean | null;
   slug?: string | null;
   description: string;
+  summary?: string | null;
+  techStack?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  role?: string | null;
+  impact?: string | null;
+  year?: number | null;
+  /**
+   * Higher numbers appear first when project lists use priority sorting.
+   */
+  priority?: number | null;
   source?: string | null;
   site?: string | null;
   category?: (string | null) | ProjectCategory;
@@ -805,6 +821,17 @@ export interface ProjectsSelect<T extends boolean = true> {
   featured?: T;
   slug?: T;
   description?: T;
+  summary?: T;
+  techStack?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  role?: T;
+  impact?: T;
+  year?: T;
+  priority?: T;
   source?: T;
   site?: T;
   category?: T;
@@ -1221,7 +1248,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Homepage {
   id: string;
-  introText: {
+  introText?: {
     root: {
       type: string;
       children: {
@@ -1235,8 +1262,89 @@ export interface Homepage {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   html?: string | null;
+  sections?:
+    | (
+        | {
+            heading: string;
+            intro: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            html?: string | null;
+            primaryCta?: {
+              label?: string | null;
+              href?: string | null;
+              id?: string | null;
+            };
+            secondaryCta?: {
+              label?: string | null;
+              href?: string | null;
+              id?: string | null;
+            };
+            profileImage?: (string | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            title?: string | null;
+            highlights?:
+              | {
+                  title: string;
+                  description: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'profileHighlights';
+          }
+        | {
+            title?: string | null;
+            intro?: string | null;
+            projects?: (string | Project)[] | null;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'featuredProjects';
+          }
+        | {
+            title?: string | null;
+            intro?: string | null;
+            limit?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'latestPosts';
+          }
+        | {
+            heading: string;
+            copy?: string | null;
+            links?:
+              | {
+                  label?: string | null;
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactCta';
+          }
+      )[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1264,11 +1372,113 @@ export interface Nav {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings".
+ */
+export interface SiteSetting {
+  id: string;
+  defaultTitle?: string | null;
+  defaultDescription?: string | null;
+  /**
+   * Example: https://jmurth.co.uk
+   */
+  canonicalBaseUrl?: string | null;
+  socialImage?: (string | null) | Media;
+  personName?: string | null;
+  jobTitle?: string | null;
+  professionalBio?: string | null;
+  profileLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "homepage_select".
  */
 export interface HomepageSelect<T extends boolean = true> {
   introText?: T;
   html?: T;
+  sections?:
+    | T
+    | {
+        hero?:
+          | T
+          | {
+              heading?: T;
+              intro?: T;
+              html?: T;
+              primaryCta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              secondaryCta?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              profileImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        profileHighlights?:
+          | T
+          | {
+              title?: T;
+              highlights?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        featuredProjects?:
+          | T
+          | {
+              title?: T;
+              intro?: T;
+              projects?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        latestPosts?:
+          | T
+          | {
+              title?: T;
+              intro?: T;
+              limit?: T;
+              id?: T;
+              blockName?: T;
+            };
+        contactCta?:
+          | T
+          | {
+              heading?: T;
+              copy?: T;
+              links?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1293,6 +1503,29 @@ export interface NavSelect<T extends boolean = true> {
     | {
         label?: T;
         link?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  defaultTitle?: T;
+  defaultDescription?: T;
+  canonicalBaseUrl?: T;
+  socialImage?: T;
+  personName?: T;
+  jobTitle?: T;
+  professionalBio?: T;
+  profileLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;
